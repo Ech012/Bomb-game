@@ -145,6 +145,19 @@ def draw_movment(direction, matrix, matrix_bombs):
 
         sys.exit()
 
+
+    reached_flag = False
+    for r in range(new_row, new_row + 6):
+        for c in range(new_col, new_col + 2):
+            if matrix[r][c] == consts.FLAG:
+                reached_flag = True
+                break
+        if reached_flag:
+            break
+
+    if reached_flag:
+        print("kdfksjdfksjdfksjdfksjdf")
+
     for r in range(current_row, current_row + 6):
         for c in range(current_col, current_col + 2):
             matrix[r][c] = consts.EMPTY_BLOCK
