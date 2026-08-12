@@ -35,3 +35,5 @@ def put_bushes(matricx_game):
                 count += 1
     return matricx_game
 
+
+
