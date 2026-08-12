@@ -49,5 +49,6 @@ def return_matricx():
     matrix_bushes = put_bushes(matrix)
     matrix = put_soldier(matrix)
     return matrix, matrix_bushes
+a
 print(return_matricx())
 
