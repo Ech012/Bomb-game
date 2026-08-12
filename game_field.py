@@ -48,6 +48,5 @@ def return_matricx():
     matrix = put_bombs(matrix)
     matrix_bushes = put_bushes(matrix)
     matrix = put_soldier(matrix)
-    return matrix, matrix_bushes
-print(return_matricx())
+    return matrix, matrix_bushes, create(), create()
 
