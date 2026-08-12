@@ -15,3 +15,5 @@ for row in range(25):
     for col in range(50):
         matricx_game[row][col] = randon
 
+
+
