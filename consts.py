@@ -10,6 +10,7 @@ SNAKE_IMG = "snake.png"
 SOLDIER_IMG = "soldier.png"
 SOLDIER_IMG_2 = "soldier_2.png"
 SOLDIER_IMG_NIGHT = "soldier_nigth.png"
+MINE_IMG = "mine.png"
 WHITE = (200, 200, 200)
 BLACK = (0, 0, 0)
 
