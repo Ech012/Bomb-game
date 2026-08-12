@@ -6,8 +6,8 @@ import consts
 
 def create():
     matricx_game = [[consts.EMPTY_BLOCK for j in range(50)] for i in range(25)]
-    for row in range(21, 23):
-        for col in range(46, 49):
+    for row in range(22, 25):
+        for col in range(46, 50):
             matricx_game[row][col] = consts.FLAG
 
     return matricx_game
