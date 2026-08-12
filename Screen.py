@@ -98,6 +98,19 @@ def drawGrid():
             pygame.draw.rect(screen, (255, 255, 255), rect, 1)
 
 
+
+def create_message(title, text):
+    root = tk.Tk()
+    root.title(title)
+    root.geometry("400x200")
+
+    text_label = tk.Label(root, text=text, font=("Arial", 16))
+
+    text_label.pack(pady=50)
+
+    root.mainloop()
+
+
 def draw_movment(direction, matrix, matrix_bombs):
     current_row = -1
     current_col = -1
@@ -133,22 +146,14 @@ def draw_movment(direction, matrix, matrix_bombs):
     next_bottom_row = new_row + 5
     if matrix_bombs[next_bottom_row][new_col] == consts.BOMB or \
             matrix_bombs[next_bottom_row][new_col + 1] == consts.BOMB:
-        root = tk.Tk()
-        root.title("Lose message")
-        root.geometry("400x200")
 
-        text_label = tk.Label(root, text="You lost!", font=("Arial", 16))
-
-        text_label.pack(pady=50)
-
-        root.mainloop()
-
+        create_message("Lose message", "You lost")
         sys.exit()
 
 
     reached_flag = False
-    for r in range(new_row, new_row + 6):
-        for c in range(new_col, new_col + 2):
+    for r in range(new_row, new_row + 5):  # 6
+        for c in range(new_col, new_col + 2): # 2
             if matrix[r][c] == consts.FLAG:
                 reached_flag = True
                 break
@@ -156,7 +161,8 @@ def draw_movment(direction, matrix, matrix_bombs):
             break
 
     if reached_flag:
-        print("kdfksjdfksjdfksjdfksjdf")
+        create_message("Win message", "You won!!!!")
+        sys.exit()
 
     for r in range(current_row, current_row + 6):
         for c in range(current_col, current_col + 2):
