@@ -1,5 +1,7 @@
 import random
 
+import pygame
+
 import consts
 
 def create():
@@ -35,9 +37,18 @@ def put_bushes(matricx_game):
                 count += 1
     return matricx_game
 
+def put_soldier(matricx_game):
+    for row in range(0, 6):
+        for col in range(0, 2):
+            matricx_game[row][col] = consts.SOLDIER
+
+    return matricx_game
+
 def return_matricx():
     matrix = create()
-    put_bombs(matrix)
-    put_bushes(matrix)
-    return matrix
+    matrix = put_bombs(matrix)
+    matrix_bushes = put_bushes(matrix)
+    matrix = put_soldier(matrix)
+    return matrix, matrix_bushes
+print(return_matricx())
 
