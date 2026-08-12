@@ -16,3 +16,4 @@ SOLDIER_IMG_NIGHT = "soldier_nigth.png"
 EMPTY_BLOCK = 0
 FLAG = 1
 BOMB = 2
+BUSH = 3
