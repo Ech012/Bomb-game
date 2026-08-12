@@ -16,3 +16,14 @@ SOLDIER_IMG_NIGHT = "soldier_nigth.png"
 EMPTY_BLOCK = 0
 FLAG = 1
 BOMB = 2
+a
+sd
+asd
+asd
+a
+sd
+async def asd
+    a
+    asd()asd()a
+    sdasd
+
