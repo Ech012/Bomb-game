@@ -35,5 +35,9 @@ def put_bushes(matricx_game):
                 count += 1
     return matricx_game
 
-
+def return_matricx():
+    matrix = create()
+    put_bombs(matrix)
+    put_bushes(matrix)
+    return matrix
 
