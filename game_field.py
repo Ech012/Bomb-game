@@ -1,6 +1,5 @@
 import random
-
-
+import copy
 import consts
 
 def create():
@@ -8,9 +7,7 @@ def create():
     for row in range(22, 25):
         for col in range(46, 50):
             matricx_game[row][col] = consts.FLAG
-
     return matricx_game
-
 
 def put_bombs(matricx_game):
     count = 0
@@ -40,21 +37,16 @@ def put_soldier(matricx_game):
     for row in range(0, 4):
         for col in range(0, 2):
             matricx_game[row][col] = consts.SOLDIER
-
     return matricx_game
-
-
-def print_matrix(matrix):
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            print(matrix[i][j], end="")
-        print()
-
 
 def return_matricx():
     matrix = create()
     matrix = put_bombs(matrix)
-    matrix_bushes = put_bushes(matrix)
-    matrix = put_soldier(matrix)
-    return matrix, matrix_bushes, create(), create()
+    matrix_with_bombs = copy.deepcopy(matrix)
 
+    matrix = put_bushes(matrix)
+    terrain = copy.deepcopy(matrix)
+
+    matrix_bushes = put_soldier(matrix)
+
+    return matrix_with_bombs, matrix_bushes, terrain

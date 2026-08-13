@@ -113,7 +113,7 @@ def create_message(title,text):
     root.mainloop()
 
 
-def draw_movment(direction, matrix, matrix_bombs):
+def draw_movment(direction, matrix, matrix_bombs, terrain):
     current_row = -1
     current_col = -1
 
@@ -154,7 +154,7 @@ def draw_movment(direction, matrix, matrix_bombs):
         sys.exit()
 
     reached_flag = False
-    if (22 <= feet_row <= 24):
+    if 22 <= feet_row <= 24:
         if (feet_row == 23 or feet_row == 24) and matrix[feet_row][new_col] == consts.FLAG:
             reached_flag = True
         elif new_col == 45:
@@ -167,24 +167,11 @@ def draw_movment(direction, matrix, matrix_bombs):
 
     for r in range(current_row, current_row + 4):
         for c in range(current_col, current_col + 2):
-            if matrix_bombs[r][c] == consts.BOMB:
-                matrix[r][c] = consts.BOMB
+            matrix[r][c] = terrain[r][c]
 
-            else:
-                matrix[r][c] = consts.EMPTY_BLOCK
-
-    for r in range(new_row, new_row + 2):
+    for r in range(new_row, new_row + 4):
         for c in range(new_col, new_col + 2):
-            if matrix_bombs[r][c] == consts.BOMB:
-                matrix[r][c] = consts.BOMB
-
-            else:
-                matrix[r][c] = consts.SOLDIER
-
-
-
-
-
+            matrix[r][c] = consts.SOLDIER
 
     return matrix
 
