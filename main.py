@@ -49,7 +49,8 @@ def main():
                 elif event.key == pygame.K_RIGHT:
                     matrix_bushes = draw_movment("right", matrix_bushes, matrix_with_bombs)
                 elif event.key == pygame.K_LEFT:
-                    matrix_bushes = draw_movment("left", matrix_bushes, matrix_with_bombs)
+                    matrix_bushes = draw_movment("l"
+                                                 "eft", matrix_bushes, matrix_with_bombs)
                 elif event.key == pygame.K_UP:
                     matrix_bushes = draw_movment("up", matrix_bushes, matrix_with_bombs)
                 elif event.key == pygame.K_DOWN:

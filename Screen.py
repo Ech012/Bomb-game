@@ -173,10 +173,18 @@ def draw_movment(direction, matrix, matrix_bombs):
             else:
                 matrix[r][c] = consts.EMPTY_BLOCK
 
-    for r in range(new_row, new_row + 4):
+    for r in range(new_row, new_row + 2):
         for c in range(new_col, new_col + 2):
+            if matrix_bombs[r][c] == consts.BOMB:
+                matrix[r][c] = consts.BOMB
 
+            else:
                 matrix[r][c] = consts.SOLDIER
+
+
+
+
+
 
     return matrix
 
