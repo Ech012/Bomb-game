@@ -7,13 +7,12 @@ import game_field
 import sys
 import tkinter as tk
 
-matrix_with_bombs, matrix_bushes, empty_matrix, game_matrix = game_field.return_matricx()
 
-BLOCK_SIZE = 10
+BLOCK_SIZE = consts.BLOCK_SIZE
 screen = pygame.display.set_mode((consts.SCREEN_WIDTH, consts.SCREEN_HEIGHT))
 
 bush_img = pygame.image.load(consts.BUSH_IMG)
-bush_img = pygame.transform.scale(bush_img, (BLOCK_SIZE, BLOCK_SIZE))
+bush_img = pygame.transform.scale(bush_img, (BLOCK_SIZE * 3, BLOCK_SIZE * 3))
 
 bomb_img = pygame.image.load(consts.MINE_IMG)
 bomb_img = pygame.transform.scale(bomb_img, (BLOCK_SIZE * 3, BLOCK_SIZE))
@@ -22,10 +21,10 @@ flag_img = pygame.image.load(consts.FLAG_IMG)
 flag_img = pygame.transform.scale(flag_img, (BLOCK_SIZE * 4, BLOCK_SIZE * 3))
 
 soldier_img = pygame.image.load(consts.SOLDIER_IMG)
-soldier_img = pygame.transform.scale(soldier_img, (BLOCK_SIZE * 2, BLOCK_SIZE * 6))
+soldier_img = pygame.transform.scale(soldier_img, (BLOCK_SIZE * 2, BLOCK_SIZE * 4))
 
 soldier_img_night = pygame.image.load(consts.SOLDIER_IMG_NIGHT)
-soldier_img_night = pygame.transform.scale(soldier_img_night, (BLOCK_SIZE * 2, BLOCK_SIZE * 6))
+soldier_img_night = pygame.transform.scale(soldier_img_night, (BLOCK_SIZE * 2, BLOCK_SIZE * 4))
 
 
 def draw_bushes_screen(grid):
@@ -56,6 +55,7 @@ def draw_bushes_screen(grid):
 
 
 def draw_bombs_screen(grid_bombs, current_soldier_row, current_soldier_col):
+
     for row_idx in range(len(grid_bombs)):
         col_idx = 0
         while col_idx < len(grid_bombs[row_idx]):
@@ -91,15 +91,15 @@ def draw_background(color):
 
 
 def drawGrid():
-    blockSize = 10
+    blockSize = consts.BLOCK_SIZE
     for x in range(0, consts.SCREEN_WIDTH, blockSize):
         for y in range(0, consts.SCREEN_HEIGHT, blockSize):
             rect = pygame.Rect(x, y, blockSize, blockSize)
-            pygame.draw.rect(screen, (255, 255, 255), rect, 1)
+            pygame.draw.rect(screen, (0, 160, 0), rect, 1)
 
 
 
-def create_message(title, text):
+def create_message(title,text):
     root = tk.Tk()
     root.title(title)
     root.geometry("400x200")
@@ -107,6 +107,8 @@ def create_message(title, text):
     text_label = tk.Label(root, text=text, font=("Arial", 16))
 
     text_label.pack(pady=50)
+
+    root.after(3000, root.destroy)
 
     root.mainloop()
 
@@ -137,42 +139,47 @@ def draw_movment(direction, matrix, matrix_bombs):
         if current_col - 1 >= 0:
             new_col -= 1
     elif direction == "down":
-        if current_row + 6 < 25:
+        if current_row + 4 < 25:
             new_row += 1
     elif direction == "up":
         if current_row - 1 >= 0:
             new_row -= 1
 
-    next_bottom_row = new_row + 5
-    if matrix_bombs[next_bottom_row][new_col] == consts.BOMB or \
-            matrix_bombs[next_bottom_row][new_col + 1] == consts.BOMB:
+    feet_row = new_row + 3
 
+    if matrix_bombs[feet_row][new_col] == consts.BOMB or \
+            matrix_bombs[feet_row][new_col + 1] == consts.BOMB:
         create_message("Lose message", "You lost")
+        pygame.quit()
         sys.exit()
 
-
     reached_flag = False
-    for r in range(new_row, new_row + 5):  # 6
-        for c in range(new_col, new_col + 2): # 2
-            if matrix[r][c] == consts.FLAG:
-                reached_flag = True
-                break
-        if reached_flag:
-            break
+    if (22 <= feet_row <= 24):
+        if (feet_row == 23 or feet_row == 24) and matrix[feet_row][new_col] == consts.FLAG:
+            reached_flag = True
+        elif new_col == 45:
+            reached_flag = True
 
     if reached_flag:
         create_message("Win message", "You won!!!!")
+        pygame.quit()
         sys.exit()
 
-    for r in range(current_row, current_row + 6):
+    for r in range(current_row, current_row + 4):
         for c in range(current_col, current_col + 2):
-            matrix[r][c] = consts.EMPTY_BLOCK
+            if matrix_bombs[r][c] == consts.BOMB:
+                matrix[r][c] = consts.BOMB
 
-    for r in range(new_row, new_row + 6):
+            else:
+                matrix[r][c] = consts.EMPTY_BLOCK
+
+    for r in range(new_row, new_row + 4):
         for c in range(new_col, new_col + 2):
-            matrix[r][c] = consts.SOLDIER
+
+                matrix[r][c] = consts.SOLDIER
 
     return matrix
+
 
 
 def get_soldier_position(matrix):
@@ -182,43 +189,3 @@ def get_soldier_position(matrix):
                 return r, c
     return -1, -1
 
-
-def main():
-    global matrix_bushes
-    pygame.init()
-    pygame.display.set_caption("Grid Game")
-
-    running = True
-    while running:
-        draw_background("green")
-        draw_bushes_screen(matrix_bushes)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    s_row, s_col = get_soldier_position(matrix_bushes)
-                    draw_background("black")
-                    drawGrid()
-                    draw_bombs_screen(matrix_with_bombs, s_row, s_col)
-                    pygame.display.flip()
-                    pygame.time.wait(1000)
-
-                elif event.key == pygame.K_RIGHT:
-                    matrix_bushes = draw_movment("right", matrix_bushes, matrix_with_bombs)
-                elif event.key == pygame.K_LEFT:
-                    matrix_bushes = draw_movment("left", matrix_bushes, matrix_with_bombs)
-                elif event.key == pygame.K_UP:
-                    matrix_bushes = draw_movment("up", matrix_bushes, matrix_with_bombs)
-                elif event.key == pygame.K_DOWN:
-                    matrix_bushes = draw_movment("down", matrix_bushes, matrix_with_bombs)
-
-        pygame.display.flip()
-
-    pygame.quit()
-
-
-if __name__ == "__main__":
-    main()

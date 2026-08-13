@@ -37,11 +37,19 @@ def put_bushes(matricx_game):
     return matricx_game
 
 def put_soldier(matricx_game):
-    for row in range(0, 6):
+    for row in range(0, 4):
         for col in range(0, 2):
             matricx_game[row][col] = consts.SOLDIER
 
     return matricx_game
+
+
+def print_matrix(matrix):
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            print(matrix[i][j], end="")
+        print()
+
 
 def return_matricx():
     matrix = create()
