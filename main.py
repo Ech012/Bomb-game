@@ -3,6 +3,7 @@ from Screen import *
 import pygame
 
 import game_field
+from load_db import *
 
 matrix_with_bombs, matrix_bushes, game_matrix = game_field.return_matricx()
 
@@ -18,7 +19,7 @@ number_keys = {
 
 
 def main():
-    global matrix_bushes
+    global matrix_bushes, game_matrix, matrix_with_bombs
     pygame.init()
     pygame.font.init()
     my_font = pygame.font.SysFont('Comic Sans MS', 45)
@@ -44,12 +45,13 @@ def main():
                     press_start_times[event.key] = time.time()
 
             elif event.type == pygame.KEYUP:
+
                 if event.key in number_keys and event.key in press_start_times:
                     elapsed_time = time.time() - press_start_times[event.key]
-                    print("The number is", number_keys[event.key])
                     if elapsed_time > 1:
-                        print("The press lasts longer than a second")
+                        game_matrix, matrix_with_bombs, matrix_bushes = load_data_game(number_keys[event.key])
                     else:
+                        save_data_game(game_matrix, matrix_with_bombs, matrix_bushes, number_keys[event.key])
                         print("The press lasts less than a second")
                     del press_start_times[event.key]
 
