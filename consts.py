@@ -1,3 +1,4 @@
+from idlelib.debugger_r import GUIAdapter
 
 ROWS = 25
 COLS = 50
@@ -17,8 +18,10 @@ SOLDIER_IMG_NIGHT = "soldier_nigth.png"
 
 
 
+
 EMPTY_BLOCK = 0
 FLAG = 1
 BOMB = 2
 BUSH = 3
 SOLDIER = 4
+GUARD = 5
