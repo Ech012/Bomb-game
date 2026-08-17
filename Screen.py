@@ -7,9 +7,12 @@ import game_field
 import sys
 import tkinter as tk
 
-
+import random
 BLOCK_SIZE = consts.BLOCK_SIZE
 screen = pygame.display.set_mode((consts.SCREEN_WIDTH, consts.SCREEN_HEIGHT))
+
+
+last_teleport_coords = None
 
 bush_img = pygame.image.load(consts.BUSH_IMG)
 bush_img = pygame.transform.scale(bush_img, (BLOCK_SIZE * 3, BLOCK_SIZE * 3))
@@ -75,6 +78,20 @@ def draw_bombs_screen(grid_bombs, current_soldier_row, current_soldier_col):
                     screen.blit(single_bomb, (screen_x, screen_y))
                     col_idx += 1
 
+            if grid_bombs[row_idx][col_idx] == consts.TELEPORT:
+                if col_idx <= len(grid_bombs[row_idx]) - 3 and \
+                        grid_bombs[row_idx][col_idx + 1] == consts.TELEPORT and \
+                        grid_bombs[row_idx][col_idx + 2] == consts.TELEPORT:
+
+                    screen.blit(bomb_img, (screen_x, screen_y))
+                    col_idx += 3
+                    continue
+                else:
+                    single_bomb = pygame.transform.scale(bomb_img, (BLOCK_SIZE, BLOCK_SIZE))
+                    screen.blit(single_bomb, (screen_x, screen_y))
+                    col_idx += 1
+
+
             elif grid_bombs[row_idx][col_idx] == consts.FLAG:
                 if row_idx == 22 and col_idx == 46:
                     screen.blit(flag_img, (screen_x, screen_y))
@@ -113,7 +130,17 @@ def create_message(title,text):
     root.mainloop()
 
 
+def get_teleport_loc(matrix_bombs, current_feet_row, current_feet_col):
+    while True:
+        rnd_place_row = random.randint(0, 25 - 4)
+        rnd_place_col = random.randint(0, 50 - 2)
+
+        if matrix_bombs[rnd_place_row][rnd_place_col] == consts.TELEPORT:
+            if rnd_place_row != current_feet_row or rnd_place_col != current_feet_col:
+                return rnd_place_row, rnd_place_col
+
 def draw_movment(direction, matrix, matrix_bombs, terrain):
+    global last_teleport_coords
     current_row = -1
     current_col = -1
 
@@ -146,12 +173,13 @@ def draw_movment(direction, matrix, matrix_bombs, terrain):
             new_row -= 1
 
     feet_row = new_row + 3
+    teleported = False
 
-    if matrix_bombs[feet_row][new_col] == consts.BOMB or \
-            matrix_bombs[feet_row][new_col + 1] == consts.BOMB:
-        create_message("Lose message", "You lost")
-        pygame.quit()
-        sys.exit()
+    # if matrix_bombs[feet_row][new_col] == consts.BOMB or \
+    #         matrix_bombs[feet_row][new_col + 1] == consts.BOMB:
+    #     create_message("Lose message", "You lost")
+    #     pygame.quit()
+    #     sys.exit()
 
     reached_flag = False
     if 22 <= feet_row <= 24:
@@ -164,6 +192,19 @@ def draw_movment(direction, matrix, matrix_bombs, terrain):
         create_message("Win message", "You won!!!!")
         pygame.quit()
         sys.exit()
+
+    if matrix_bombs[feet_row][new_col] == consts.TELEPORT:
+        if last_teleport_coords == (feet_row, new_col):
+            pass
+        else:
+            teleport_target_row, teleport_target_col = get_teleport_loc(matrix_bombs, feet_row, new_col)
+
+            new_row = teleport_target_row - 3
+            new_col = teleport_target_col
+
+            last_teleport_coords = (teleport_target_row, teleport_target_col)
+    else:
+        last_teleport_coords = None
 
     for r in range(current_row, current_row + 4):
         for c in range(current_col, current_col + 2):

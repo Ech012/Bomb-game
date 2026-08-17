@@ -11,6 +11,7 @@ def create():
 
 def put_bombs(matricx_game):
     count = 0
+    count_teleports = 0
     for i in range(25):
         for j in range(50 - 3):
             rnd_place_row = random.randint(0, 24)
@@ -20,6 +21,19 @@ def put_bombs(matricx_game):
                 matricx_game[rnd_place_row][rnd_place_col + 1] = consts.BOMB
                 matricx_game[rnd_place_row][rnd_place_col + 2] = consts.BOMB
                 count += 1
+
+    for i in range(25):
+        for j in range(50 - 3):
+            rnd_place_row = random.randint(0, 24)
+            rnd_place_col = random.randint(0, 50 - 3)
+            if matricx_game[rnd_place_row][rnd_place_col] == consts.EMPTY_BLOCK and count_teleports < 5:
+                matricx_game[rnd_place_row][rnd_place_col] = consts.TELEPORT
+                matricx_game[rnd_place_row][rnd_place_col + 1] = consts.TELEPORT
+                matricx_game[rnd_place_row][rnd_place_col + 2] = consts.TELEPORT
+                count_teleports += 1
+
+
+
     return matricx_game
 
 def put_bushes(matricx_game):
