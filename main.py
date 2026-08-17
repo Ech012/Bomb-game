@@ -8,7 +8,13 @@ matrix_with_bombs, matrix_bushes, game_matrix = game_field.return_matricx()
 
 
 
+press_start_times = {}
 
+number_keys = {
+    pygame.K_1: 1, pygame.K_2: 2, pygame.K_3: 3,
+    pygame.K_4: 4, pygame.K_5: 5, pygame.K_6: 6,
+    pygame.K_7: 7, pygame.K_8: 8, pygame.K_9: 9
+}
 
 
 def main():
@@ -34,6 +40,19 @@ def main():
                 running = False
 
             if event.type == pygame.KEYDOWN:
+                if event.key in number_keys:
+                    press_start_times[event.key] = time.time()
+
+            elif event.type == pygame.KEYUP:
+                if event.key in number_keys and event.key in press_start_times:
+                    elapsed_time = time.time() - press_start_times[event.key]
+                    print("The number is", number_keys[event.key])
+                    if elapsed_time > 1:
+                        print("The press lasts longer than a second")
+                    else:
+                        print("The press lasts less than a second")
+                    del press_start_times[event.key]
+
                 if event.key == pygame.K_RETURN:
                     s_row, s_col = get_soldier_position(matrix_bushes)
                     draw_background("black")
@@ -41,6 +60,7 @@ def main():
                     draw_bombs_screen(matrix_with_bombs, s_row, s_col)
                     pygame.display.flip()
                     pygame.time.wait(1000)
+
 
                 elif event.key == pygame.K_RIGHT:
                     matrix_bushes = draw_movment("right", matrix_bushes, matrix_with_bombs, game_matrix)
