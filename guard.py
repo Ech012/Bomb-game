@@ -12,6 +12,8 @@ GUARD_COL_LEFT = 0
 GUARD_COL_RIGHT = 47
 
 
+
+
 def _build_diagonal_path(row_start, col_start, row_end, col_end):
     points = []
     dx = col_end - col_start
