@@ -1,17 +1,15 @@
 from main import *
 from consts import *
 
-guard_img = pygame.image.load(consts.SOLDIER_IMG)
-guard_img = pygame.transform.scale(soldier_img, (BLOCK_SIZE * 2, BLOCK_SIZE * 4))
 
 def get_guard_position(matrix):
-    for r in range(20,24):
+    for r in range(20,25):
         for c in range(0,2):
             matrix[r][c] = consts.GUARD
     return matrix
 
 
-def draw_movment(matrix):
+def draw_movment_guard(matrix):
         current_row = -1
         current_col = -1
         direction = 1
@@ -26,6 +24,7 @@ def draw_movment(matrix):
 
         new_row = current_row
         new_col = current_col
+
         if current_row == -1:
             return matrix
         matrix[new_row][new_col] = consts.EMPTY_BLOCK
@@ -40,7 +39,7 @@ def draw_movment(matrix):
 
         return matrix
 
-def Assault_on_a_security_guard (matrix):
+def Assault_on_a_security_guard(matrix):
     for r in range(len(matrix)):
         for c in range(len(matrix[r])):
             if matrix[r][c] == consts.GUARD:
@@ -48,8 +47,3 @@ def Assault_on_a_security_guard (matrix):
                     create_message("Lose message", "You lost")
                     pygame.quit()
                     sys.exit()
-
-def draw_guard(matrix):
-    for row_idx in range(len(matrix)):
-        for col_idx in range(len(matrix[row_idx])):
-

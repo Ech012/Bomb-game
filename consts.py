@@ -24,4 +24,5 @@ FLAG = 1
 BOMB = 2
 BUSH = 3
 SOLDIER = 4
+
 GUARD = 5

@@ -3,6 +3,7 @@ from Screen import *
 import pygame
 
 import game_field
+from guard import *
 
 matrix_with_bombs, matrix_bushes, game_matrix = game_field.return_matricx()
 
@@ -32,7 +33,12 @@ def main():
 
 
         draw_background("green")
+        get_guard_position(matrix_bushes)
         draw_bushes_screen(matrix_bushes)
+        draw_movment_guard(matrix_bushes)
+        draw_guard_screen(game_matrix)
+
+
         screen.blit(text_surface, (50, 0))
         screen.blit(text_surface2, (50, 30))
         for event in pygame.event.get():
@@ -70,6 +76,7 @@ def main():
                     matrix_bushes = draw_movment("up", matrix_bushes, matrix_with_bombs, game_matrix)
                 elif event.key == pygame.K_DOWN:
                     matrix_bushes = draw_movment("down", matrix_bushes, matrix_with_bombs, game_matrix)
+
 
         pygame.display.flip()
 

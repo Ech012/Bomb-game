@@ -6,6 +6,7 @@ import random
 import game_field
 import sys
 import tkinter as tk
+from guard import *
 
 
 BLOCK_SIZE = consts.BLOCK_SIZE
@@ -25,6 +26,9 @@ soldier_img = pygame.transform.scale(soldier_img, (BLOCK_SIZE * 2, BLOCK_SIZE * 
 
 soldier_img_night = pygame.image.load(consts.SOLDIER_IMG_NIGHT)
 soldier_img_night = pygame.transform.scale(soldier_img_night, (BLOCK_SIZE * 2, BLOCK_SIZE * 4))
+
+guard_img = pygame.image.load(consts.SOLDIER_IMG)
+guard_img = pygame.transform.scale(soldier_img, (BLOCK_SIZE * 2, BLOCK_SIZE * 4))
 
 
 def draw_bushes_screen(grid):
@@ -49,6 +53,14 @@ def draw_bushes_screen(grid):
 
                 if is_left_edge and is_top_edge:
                     screen.blit(soldier_img, (screen_x, screen_y))
+                col_idx += 1
+
+            elif grid[row_idx][col_idx] == consts.GUARD:
+                is_left_edge = (col_idx == 0 or grid[row_idx][col_idx - 1] != consts.GUARD)
+                is_top_edge = (row_idx == 0 or grid[row_idx - 1][col_idx] != consts.GUARD)
+
+                if is_left_edge and is_top_edge:
+                    screen.blit(guard_img, (screen_x, screen_y))
                 col_idx += 1
             else:
                 col_idx += 1
@@ -184,3 +196,21 @@ def get_soldier_position(matrix):
                 return r, c
     return -1, -1
 
+def draw_guard_screen(grid):
+
+
+    for row_idx in range(len(grid)):
+        col_idx = 0
+        while col_idx < len(grid[row_idx]):
+            screen_x = col_idx * BLOCK_SIZE
+            screen_y = row_idx * BLOCK_SIZE
+            if grid[row_idx][col_idx] == consts.GUARD:
+                is_left_edge = (col_idx == 0 or grid[row_idx][col_idx - 1] != consts.GUARD)
+                is_top_edge = (row_idx == 0 or grid[row_idx - 1][col_idx] != consts.GUARD)
+
+                if is_left_edge and is_top_edge:
+                    screen.blit(guard_img, (screen_x, screen_y))
+                col_idx += 1
+
+            else:
+                col_idx += 1
