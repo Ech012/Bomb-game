@@ -238,7 +238,6 @@ def get_soldier_position(matrix):
 
 def draw_guard_screen(grid):
 
-
     for row_idx in range(len(grid)):
         col_idx = 0
         while col_idx < len(grid[row_idx]):
