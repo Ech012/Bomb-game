@@ -6,14 +6,13 @@ import sys
 GUARD_HEIGHT = 4
 GUARD_WIDTH = 2
 
-GUARD_ROW_BOTTOM = GUARD_ROW_START = 24 - GUARD_HEIGHT + 1  # פינה שמאלית-תחתונה
-GUARD_ROW_TOP = 0                                           # פינה ימנית-עליונה
+GUARD_ROW_BOTTOM = GUARD_ROW_START = 24 - GUARD_HEIGHT + 1
+GUARD_ROW_TOP = 0
 GUARD_COL_LEFT = 0
-GUARD_COL_RIGHT = 47                                         # 49 - GUARD_WIDTH
+GUARD_COL_RIGHT = 47
 
 
 def _build_diagonal_path(row_start, col_start, row_end, col_end):
-    """בונה רשימת נקודות על קו אלכסוני בין שתי הפינות (אלגוריתם Bresenham)."""
     points = []
     dx = col_end - col_start
     dy = row_end - row_start
@@ -28,7 +27,7 @@ def _build_diagonal_path(row_start, col_start, row_end, col_end):
 
 GUARD_PATH = _build_diagonal_path(GUARD_ROW_START, GUARD_COL_LEFT, GUARD_ROW_TOP, GUARD_COL_RIGHT)
 guard_path_index = 0
-guard_direction = 1  # 1 = מתקדם בנתיב, -1 = חוזר בנתיב
+guard_direction = 1
 
 
 def get_guard_position(matrix):
