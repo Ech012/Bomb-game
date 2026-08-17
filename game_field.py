@@ -14,7 +14,7 @@ def put_bombs(matricx_game):
     count_teleports = 0
     for i in range(4, 25):
         for j in range(50 - 3):
-            rnd_place_row = random.randint(0, 24)
+            rnd_place_row = random.randint(4, 24)
             rnd_place_col = random.randint(0, 50 - 3)
             if matricx_game[rnd_place_row][rnd_place_col] == consts.EMPTY_BLOCK and count < 20:
                 matricx_game[rnd_place_row][rnd_place_col] = consts.BOMB
@@ -24,7 +24,7 @@ def put_bombs(matricx_game):
 
     for i in range(4, 25):
         for j in range(50 - 3):
-            rnd_place_row = random.randint(0, 24)
+            rnd_place_row = random.randint(4, 24)
             rnd_place_col = random.randint(0, 50 - 3)
             if matricx_game[rnd_place_row][rnd_place_col] == consts.EMPTY_BLOCK and count_teleports < 5:
                 matricx_game[rnd_place_row][rnd_place_col] = consts.TELEPORT
