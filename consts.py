@@ -1,4 +1,3 @@
-from idlelib.debugger_r import GUIAdapter
 
 ROWS = 25
 COLS = 50

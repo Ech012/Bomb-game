@@ -6,7 +6,7 @@ import random
 import game_field
 import sys
 import tkinter as tk
-from guard import *
+import guard
 
 import random
 BLOCK_SIZE = consts.BLOCK_SIZE
@@ -186,11 +186,11 @@ def draw_movment(direction, matrix, matrix_bombs, terrain):
 
     feet_row = new_row + 3
 
-    if matrix_bombs[feet_row][new_col] == consts.BOMB or \
-            matrix_bombs[feet_row][new_col + 1] == consts.BOMB:
-        create_message("Lose message", "You lost")
-        pygame.quit()
-        sys.exit()
+    # if matrix_bombs[feet_row][new_col] == consts.BOMB or \
+    #         matrix_bombs[feet_row][new_col + 1] == consts.BOMB:
+    #     create_message("Lose message", "You lost")
+    #     pygame.quit()
+    #     sys.exit()
 
     reached_flag = False
     if 22 <= feet_row <= 24:

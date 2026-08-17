@@ -1,10 +1,10 @@
 from Screen import *
-
 import pygame
 
 import game_field
 from guard import *
 from load_db import *
+import time
 
 matrix_with_bombs, matrix_bushes, game_matrix = game_field.return_matricx()
 
@@ -28,16 +28,14 @@ def main():
     text_surface2 = my_font.render('Have Fun!', False, (255, 255, 255))
 
     pygame.display.set_caption("Grid Game")
-
+    matrix_bushes = get_guard_position(matrix_bushes)
     running = True
     while running:
 
 
-        draw_background("green")
-        get_guard_position(matrix_bushes)
-        draw_bushes_screen(matrix_bushes)
-        draw_movment_guard(matrix_bushes)
-        draw_guard_screen(game_matrix)
+        Screen.draw_background("green")
+        Screen.draw_bushes_screen(matrix_bushes)
+        Screen.draw_guard_screen(matrix_bushes)
 
 
         screen.blit(text_surface, (50, 0))
@@ -72,12 +70,20 @@ def main():
 
                 elif event.key == pygame.K_RIGHT:
                     matrix_bushes = draw_movment("right", matrix_bushes, matrix_with_bombs, game_matrix)
+                    matrix_bushes = draw_movment_guard(matrix_bushes, game_matrix)
+                    Assault_on_a_security_guard(matrix_bushes)
                 elif event.key == pygame.K_LEFT:
                     matrix_bushes = draw_movment("left", matrix_bushes, matrix_with_bombs, game_matrix)
+                    matrix_bushes = draw_movment_guard(matrix_bushes, game_matrix)
+                    Assault_on_a_security_guard(matrix_bushes)
                 elif event.key == pygame.K_UP:
                     matrix_bushes = draw_movment("up", matrix_bushes, matrix_with_bombs, game_matrix)
+                    matrix_bushes = draw_movment_guard(matrix_bushes, game_matrix)
+                    Assault_on_a_security_guard(matrix_bushes)
                 elif event.key == pygame.K_DOWN:
                     matrix_bushes = draw_movment("down", matrix_bushes, matrix_with_bombs, game_matrix)
+                    matrix_bushes = draw_movment_guard(matrix_bushes, game_matrix)
+                    Assault_on_a_security_guard(matrix_bushes)
 
 
         pygame.display.flip()
