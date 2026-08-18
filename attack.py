@@ -1,3 +1,5 @@
+import re
+
 import pandas as pd
 import random
 from consts import *
@@ -46,3 +48,11 @@ def teleport_to_flag_hack(file_name,terrain):
     df_updated = pd.DataFrame(matrix)
     df_updated.to_csv(file_name, index=False, header=False)
 
+def brute_force_key ():
+    file = open('keywords.txt', 'r')
+    clean_text = file.readlines()
+    new_l = [i.strip() for i in clean_text]
+    if
+    print(new_l)
+
+brute_force_key()
