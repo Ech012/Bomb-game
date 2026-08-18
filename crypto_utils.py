@@ -1,4 +1,5 @@
-from itertools import cycle
+import hashlib as h
+import hmac
 
 def encryptDecrypt(inpString):
     xorKey = 'P'
@@ -11,12 +12,20 @@ def encryptDecrypt(inpString):
     return inpString
 
 
-if __name__ == '__main__':
-    sampleString = "GeeksforGeeks"
+def hash256_hex(text):
+    return h.sha256(text.encode("utf-8")).hexdigest()
 
-    print("Encrypted String: ", end="")
-    sampleString = encryptDecrypt(sampleString)
-    print("\n")
+def hmac_sign(key, msg):
+    key = key.encode("utf-8")
+    msg = msg.encode("utf-8")
+    return hmac.new(key, msg, h.sha256).hexdigest()
 
-    print("Decrypted String: ", end="")
-    encryptDecrypt(sampleString)
+def hmac_verify(key, msg, check_string):
+    key = key.encode("utf-8")
+    msg = msg.encode("utf-8")
+
+    ch = hmac.new(key, msg, h.sha256).hexdigest()
+    return hmac.compare_digest(ch, check_string)
+
+
+
