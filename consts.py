@@ -23,3 +23,7 @@ BOMB = 2
 BUSH = 3
 SOLDIER = 4
 TELEPORT = 5
+
+
+SECRET = "Hello world!"
+FIVE_MIN_IN_SEC = 300
