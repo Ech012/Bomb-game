@@ -25,3 +25,8 @@ BUSH = 3
 SOLDIER = 4
 GUARD = 6
 TELEPORT = 5
+
+
+
+SECRET = "Hello world!"
+FIVE_MIN_IN_SEC = 300
