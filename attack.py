@@ -52,7 +52,8 @@ def brute_force_key ():
     file = open('keywords.txt', 'r')
     clean_text = file.readlines()
     new_l = [i.strip() for i in clean_text]
-    if
-    print(new_l)
+    if SECRET in new_l:
+        print("The key is on the list")
+    else:
+        print("The key is not on the list")
 
-brute_force_key()
