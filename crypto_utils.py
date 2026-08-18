@@ -7,7 +7,6 @@ def encryptDecrypt(inpString):
         inpString = (inpString[:i] +
                      chr(ord(inpString[i]) ^ ord(xorKey)) +
                      inpString[i + 1:])
-        print(inpString[i], end="")
 
     return inpString
 
@@ -26,6 +25,10 @@ def hmac_verify(key, msg, check_string):
 
     ch = hmac.new(key, msg, h.sha256).hexdigest()
     return hmac.compare_digest(ch, check_string)
+
+
+
+
 
 
 
